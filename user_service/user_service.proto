@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package user_service;
+
+option go_package="github.com/chenfenghua/small_appointment_stub/user_service";
+
+message RegisterReq {
+  string nick = 1;
+  string uniq_id = 2;
+  int32 login_type = 3; // 0-未知， 1-wx， 2-qq（好像没有？）
+}
+
+message RegisterRsp {
+
+}
+
+service  UserService {
+  rpc Register(RegisterReq) returns(RegisterRsp);
+}
