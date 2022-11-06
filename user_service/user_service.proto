@@ -14,6 +14,15 @@ message RegisterRsp {
 
 }
 
+message GetAuthTokenReq {
+  string code = 1;
+}
+
+message GetAuthTokenRsp {
+  string auth_token = 1;
+}
+
 service  UserService {
   rpc Register(RegisterReq) returns(RegisterRsp);
+  rpc GetAuthToken(GetAuthTokenReq) returns(GetAuthTokenRsp);
 }

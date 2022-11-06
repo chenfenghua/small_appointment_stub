@@ -11,9 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3418426c-6305-4ed8-9a66-9769670870be" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/user_service/user_service.pb.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user_service/user_service.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user_service/user_service_grpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_service/user_service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/user_service/user_service.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
