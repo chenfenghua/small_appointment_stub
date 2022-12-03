@@ -1,0 +1,185 @@
+syntax = "proto3";
+
+package appointment_service;
+
+option go_package="github.com/chenfenghua/small_appointment_stub/appointment_service";
+
+message PublishActivityReq {
+  string union_id = 1;// 用户唯一标识
+  string open_id =2;// 仅作为存储使用
+  AppointmentInfo info = 3;// 预约信息
+//  string activity_name = 3; // 不为空
+//  string description = 4;// 描述（非必填）
+//  string cover = 5; // 封面链接
+//  int32 mode = 6; // 预约模式：0-未知、1-循环模式、2-固定日期模式
+//  map<string, AppointmentTimeSlot> infos = 7;// 所有模式都是这种方式，端侧自己决定字符串的解析方式作为传入
+//  repeated ExtraInfo extra_info = 8;// 额外的预约信息
+}
+
+message AppointmentInfo {
+  repeated ExtraInfo extra_info = 1;// 额外的预约信息
+  string activity_avatar = 2; // 活动头像链接
+  string activity_nick = 3;// 活动昵称
+  repeated AppointmentIntroduction introductions = 4;
+  repeated AppointmentProject projects = 5;
+}
+
+message AppointmentProject {
+  string name = 1;// 项目名称
+  string cover = 2; // 封面链接
+  int32 mode = 3; // 预约模式：0-未知、1-循环模式、2-固定日期模式
+  map<string, AppointmentTimeSlot> infos = 4;// 所有模式都是这种方式，端侧自己决定字符串的解析方式作为传
+  string description = 5;// 描述（非必填）
+  int32 status = 6;// 0-未知、1-可预约、2-不可预约（已结束）、3-临时暂停
+  string extra_info = 7;// 客户自行使用
+}
+
+// 预约说明
+message AppointmentIntroduction {
+  string type = 1; // 主要是客户端自行判断使用 0-未知、1-文字、2-大图、3-小图、4-视频
+  string value = 2;// 图片或视频的url或者描述信息（客户端先上传后拿到链接补充）
+  repeated string images = 3;// 小图url列表
+}
+
+message AppointmentTimeSlot {
+  repeated TimeSlot times = 1; // 时间段列表
+}
+
+// 单独表记录使用数量（第一版先考虑不引入redis）
+message TimeSlot {
+  string begin_time = 1;
+  string end_time = 2;
+  int32 max_number = 3; // 最大数量-1为无限
+  int32 left_number = 4;// 剩余数量
+}
+
+message ExtraInfo {
+  string field_name = 1;
+  string field_value = 2;
+  bool is_must = 3; // 是否必填
+}
+
+message PublishActivityRsp {
+  string activity_id = 1; // 唯一id，
+}
+
+message GetPersonActivityListReq {
+  string union_id = 1; //唯一标识
+}
+
+message GetPersonActivityListRsp {
+  repeated ActivityDetail infos = 1;
+}
+
+message ReserveReq {
+  string union_id = 1;
+    ReserveDetail detail = 2;
+//  string activity_id = 2; // 唯一id，
+//  repeated RserveInfo info = 3; // 预约信息，可以一次预约多个
+//  ExtraInfo extra_info = 4;// 每次预约单只有一个预约人
+//  int64 timestamp = 5;// 发起预约的时间戳
+}
+
+message RserveInfo {
+  string date = 1;// 年月日具体规则需要对齐
+  string begin_time = 2;
+  string end_time = 3;
+  string number = 4; //预约人数？
+}
+
+message ReserveRsp {
+  string id = 1; // 预约ID，唯一，根据此id可以查对应用户的预约单
+  int32 number = 2;// 预约号？
+  int32 status = 3; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队、4-已取消）
+}
+
+message GetPersonReserveListReq {
+  string union_id = 1;// 用户
+  int32 user_type = 2; // 用户类型（0-未知、1-预约者，2-发布者），默认展示预约人的
+  string activity_id = 3;// 默认为空，不进行过滤
+  int32 page = 4; // 页数，从1开始，默认为1
+  int32 size = 5;// 大小，默认为10，不填默认为10
+}
+
+message ReserveDetail {
+  string activity_id = 1; // 唯一id，
+  repeated RserveInfo info = 2; // 预约信息，可以一次预约多个
+  ExtraInfo extra_info = 3;// 每次预约单只有一个预约人
+  int64 timestamp = 4;// 发起预约的时间戳
+  int32 status = 5; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队）
+}
+
+message GetPersonReserveListRsp {
+  repeated ReserveDetail data = 1;
+  int32 total = 2;
+  bool is_finish = 3; //  是否结束
+}
+
+message GetPersonReserveDetailReq {
+  string union_id = 1;// 用户
+  string reserve_id = 2;// 预约ID
+}
+
+message GetPersonReserveDetailRsp {
+    ReserveDetail detail = 1;// 详情
+}
+
+//message GetActivityReserveListReq {
+//  string union_id = 1;// 用户
+//  int32 page = 2; // 页数，从1开始，默认为1
+//  int32 size = 3;// 大小，默认为10，不填默认为10
+//}。
+//// 根据时间线存储的用户发布的活动被预约的详情单时间点
+//message GetPersonActivityRserveListReq {
+//  string publish_union_id = 1;// 发布人用户ID
+//  int32 page = 2; // 页数，从1开始，默认为1
+//  int32 size = 3;// 大小，默认为10，不填默认为10
+//}
+//message GetPersonActivityRserveListRsp {
+//  repeated ReserveDetail data = 1;
+//  int32 total = 2;
+//  bool is_finish = 3; //  是否结束
+//}
+
+
+message ActivityExposureReportReq {
+  string activity_id = 1;// 事件序列化
+  string union_id = 2; // 来过活动的人
+}
+message ActivityExposureReportRsp {
+}
+
+message GetPersonActivityReq {
+  string union_id = 1; //唯一标识
+  string activity_id = 2; //唯一标识
+}
+
+message ActivityDetail {
+  repeated AppointmentInfo infos = 1;
+  int32 reserve_number = 2;// 预约人数（预约单的数量，不管取消）
+  int32 watch_number = 3;// 来过人数（这个正常需要上报接口）
+  string timestamp = 4;//
+  int32 user_type = 5;// 当前查询的用户类型，0-未知、1-预约者、2-发布者
+}
+
+message GetPersonActivityRsp {
+    ActivityDetail info = 1;
+}
+
+// 预约人数是指的预约单的总数？xx人来过指的的记录什么信息？
+service AppointmentService {
+  // 发布活动
+  rpc PublishActivity(PublishActivityReq) returns(PublishActivityRsp);
+  // 获取用户发布的活动
+  rpc GetPersonActivityList(GetPersonActivityListReq) returns(GetPersonActivityListRsp);
+  // 获取活动详情
+  rpc GetPersonActivity(GetPersonActivityReq) returns(GetPersonActivityRsp);
+  // 预约（注意幂等）同一个活动 同一个用户
+  rpc Reserve(ReserveReq) returns(ReserveRsp);
+  // 获取用户预约列表（应该需要分页）
+  rpc GetPersonReserveList(GetPersonReserveListReq) returns(GetPersonReserveListRsp);
+  // 获取用户预约详情
+  rpc GetPersonReserveDetail(GetPersonReserveDetailReq) returns(GetPersonReserveDetailRsp);
+  // 活动曝光上报
+  rpc ActivityExposureReport(ActivityExposureReportReq) returns(ActivityExposureReportRsp);
+}

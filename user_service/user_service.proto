@@ -4,13 +4,14 @@ package user_service;
 
 option go_package="github.com/chenfenghua/small_appointment_stub/user_service";
 
-message RegisterReq {
+// 更新用户头像和昵称（都需要带过来）
+message UpdateUserInfoReq {
   string nick = 1;
-  string uniq_id = 2;
-  int32 login_type = 3; // 0-未知， 1-wx， 2-qq（好像没有？）
+  string avatar = 2;
+  string union_id = 3;
 }
 
-message RegisterRsp {
+message UpdateUserInfoRsp {
 
 }
 
@@ -22,7 +23,21 @@ message GetAuthTokenRsp {
   string auth_token = 1;
 }
 
+
+message GetUserInfoReq {
+  string union_id = 1;
+}
+
+message GetUserInfoRsp {
+  string nick = 1;
+  string avatar = 2;
+  string union_id = 3;
+  int32 near_action = 4;// 最近的动作 0-未操作过、1-预约过、2-发起过
+  int64 timestamp =5;//最近动作的时间
+}
+
 service  UserService {
-  rpc Register(RegisterReq) returns(RegisterRsp);
+  rpc UpdateUserInfo(UpdateUserInfoReq) returns(UpdateUserInfoRsp);
+  rpc GetUserInfo(GetUserInfoReq) returns(GetUserInfoRsp);
   rpc GetAuthToken(GetAuthTokenReq) returns(GetAuthTokenRsp);
 }

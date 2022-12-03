@@ -11,6 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3418426c-6305-4ed8-9a66-9769670870be" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/appointment_service/appointment_service.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user_service/user_service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/user_service/user_service.proto" afterDir="false" />
     </list>
@@ -36,11 +37,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/user_service" />
     <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/user_service" />
+      <recent name="$PROJECT_DIR$/appointment_service" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
