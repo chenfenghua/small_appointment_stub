@@ -1309,11 +1309,11 @@ type ActivityDetail struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Infos         []*AppointmentInfo `protobuf:"bytes,1,rep,name=infos,proto3" json:"infos,omitempty"`
-	ReserveNumber int32              `protobuf:"varint,2,opt,name=reserve_number,json=reserveNumber,proto3" json:"reserve_number,omitempty"` // 预约人数（预约单的数量，不管取消）
-	WatchNumber   int32              `protobuf:"varint,3,opt,name=watch_number,json=watchNumber,proto3" json:"watch_number,omitempty"`       // 来过人数（这个正常需要上报接口）
-	Timestamp     string             `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                               //
-	UserType      int32              `protobuf:"varint,5,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`                // 当前查询的用户类型，0-未知、1-预约者、2-发布者
+	Infos         *AppointmentInfo `protobuf:"bytes,1,opt,name=infos,proto3" json:"infos,omitempty"`
+	ReserveNumber int32            `protobuf:"varint,2,opt,name=reserve_number,json=reserveNumber,proto3" json:"reserve_number,omitempty"` // 预约人数（预约单的数量，不管取消）
+	WatchNumber   int32            `protobuf:"varint,3,opt,name=watch_number,json=watchNumber,proto3" json:"watch_number,omitempty"`       // 来过人数（这个正常需要上报接口）
+	Timestamp     string           `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                               //
+	UserType      int32            `protobuf:"varint,5,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`                // 当前查询的用户类型，0-未知、1-预约者、2-发布者
 }
 
 func (x *ActivityDetail) Reset() {
@@ -1348,7 +1348,7 @@ func (*ActivityDetail) Descriptor() ([]byte, []int) {
 	return file_appointment_service_appointment_service_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *ActivityDetail) GetInfos() []*AppointmentInfo {
+func (x *ActivityDetail) GetInfos() *AppointmentInfo {
 	if x != nil {
 		return x.Infos
 	}
@@ -1600,7 +1600,7 @@ var file_appointment_service_appointment_service_proto_rawDesc = []byte{
 	0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x49, 0x64, 0x22, 0xd1, 0x01, 0x0a,
 	0x0e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12,
-	0x3a, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24,
+	0x3a, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24,
 	0x2e, 0x61, 0x70, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x65, 0x72,
 	0x76, 0x69, 0x63, 0x65, 0x2e, 0x41, 0x70, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x6d, 0x65, 0x6e, 0x74,
 	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x12, 0x25, 0x0a, 0x0e, 0x72,

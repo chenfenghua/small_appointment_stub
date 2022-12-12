@@ -155,7 +155,7 @@ message GetPersonActivityReq {
 }
 
 message ActivityDetail {
-  repeated AppointmentInfo infos = 1;
+  AppointmentInfo infos = 1;
   int32 reserve_number = 2;// 预约人数（预约单的数量，不管取消）
   int32 watch_number = 3;// 来过人数（这个正常需要上报接口）
   string timestamp = 4;//

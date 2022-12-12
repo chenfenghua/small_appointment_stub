@@ -11,9 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3418426c-6305-4ed8-9a66-9769670870be" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/appointment_service/appointment_service.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_service/user_service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/user_service/user_service.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appointment_service/appointment_service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/appointment_service/appointment_service.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +60,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -70,5 +70,9 @@
       <screen x="1680" y="-192" width="2560" height="1415" />
     </state>
     <state x="1875" y="65" key="SettingsEditor/1680.-192.2560.1415/0.25.1680.978@1680.-192.2560.1415" timestamp="1667632961560" />
+    <state x="440" y="251" key="Vcs.Push.Dialog.v2" timestamp="1670684161492">
+      <screen x="0" y="25" width="1680" height="978" />
+    </state>
+    <state x="440" y="251" key="Vcs.Push.Dialog.v2/1680.-192.2560.1415/0.25.1680.978@0.25.1680.978" timestamp="1670684161492" />
   </component>
 </project>
