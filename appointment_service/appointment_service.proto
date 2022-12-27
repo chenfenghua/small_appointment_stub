@@ -160,6 +160,7 @@ message ActivityDetail {
   int32 watch_number = 3;// 来过人数（这个正常需要上报接口）
   string timestamp = 4;//
   int32 user_type = 5;// 当前查询的用户类型，0-未知、1-预约者、2-发布者
+  string activity_id = 6;// 当前活动ID
 }
 
 message GetPersonActivityRsp {
