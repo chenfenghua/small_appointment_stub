@@ -28,12 +28,14 @@ type AppointmentServiceClient interface {
 	GetPersonActivityList(ctx context.Context, in *GetPersonActivityListReq, opts ...grpc.CallOption) (*GetPersonActivityListRsp, error)
 	// 获取活动详情
 	GetPersonActivity(ctx context.Context, in *GetPersonActivityReq, opts ...grpc.CallOption) (*GetPersonActivityRsp, error)
-	// 预约（注意幂等）同一个活动 同一个用户
+	// 预约
 	Reserve(ctx context.Context, in *ReserveReq, opts ...grpc.CallOption) (*ReserveRsp, error)
 	// 获取用户预约列表（应该需要分页）
 	GetPersonReserveList(ctx context.Context, in *GetPersonReserveListReq, opts ...grpc.CallOption) (*GetPersonReserveListRsp, error)
 	// 获取用户预约详情
 	GetPersonReserveDetail(ctx context.Context, in *GetPersonReserveDetailReq, opts ...grpc.CallOption) (*GetPersonReserveDetailRsp, error)
+	// 获取活动的某日预约人数
+	GetReserveNumberByActivity(ctx context.Context, in *GetReserveNumberByActivityReq, opts ...grpc.CallOption) (*GetReserveNumberByActivityRsp, error)
 	// 活动曝光上报
 	ActivityExposureReport(ctx context.Context, in *ActivityExposureReportReq, opts ...grpc.CallOption) (*ActivityExposureReportRsp, error)
 }
@@ -100,6 +102,15 @@ func (c *appointmentServiceClient) GetPersonReserveDetail(ctx context.Context, i
 	return out, nil
 }
 
+func (c *appointmentServiceClient) GetReserveNumberByActivity(ctx context.Context, in *GetReserveNumberByActivityReq, opts ...grpc.CallOption) (*GetReserveNumberByActivityRsp, error) {
+	out := new(GetReserveNumberByActivityRsp)
+	err := c.cc.Invoke(ctx, "/appointment_service.AppointmentService/GetReserveNumberByActivity", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *appointmentServiceClient) ActivityExposureReport(ctx context.Context, in *ActivityExposureReportReq, opts ...grpc.CallOption) (*ActivityExposureReportRsp, error) {
 	out := new(ActivityExposureReportRsp)
 	err := c.cc.Invoke(ctx, "/appointment_service.AppointmentService/ActivityExposureReport", in, out, opts...)
@@ -119,12 +130,14 @@ type AppointmentServiceServer interface {
 	GetPersonActivityList(context.Context, *GetPersonActivityListReq) (*GetPersonActivityListRsp, error)
 	// 获取活动详情
 	GetPersonActivity(context.Context, *GetPersonActivityReq) (*GetPersonActivityRsp, error)
-	// 预约（注意幂等）同一个活动 同一个用户
+	// 预约
 	Reserve(context.Context, *ReserveReq) (*ReserveRsp, error)
 	// 获取用户预约列表（应该需要分页）
 	GetPersonReserveList(context.Context, *GetPersonReserveListReq) (*GetPersonReserveListRsp, error)
 	// 获取用户预约详情
 	GetPersonReserveDetail(context.Context, *GetPersonReserveDetailReq) (*GetPersonReserveDetailRsp, error)
+	// 获取活动的某日预约人数
+	GetReserveNumberByActivity(context.Context, *GetReserveNumberByActivityReq) (*GetReserveNumberByActivityRsp, error)
 	// 活动曝光上报
 	ActivityExposureReport(context.Context, *ActivityExposureReportReq) (*ActivityExposureReportRsp, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
@@ -151,6 +164,9 @@ func (UnimplementedAppointmentServiceServer) GetPersonReserveList(context.Contex
 }
 func (UnimplementedAppointmentServiceServer) GetPersonReserveDetail(context.Context, *GetPersonReserveDetailReq) (*GetPersonReserveDetailRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPersonReserveDetail not implemented")
+}
+func (UnimplementedAppointmentServiceServer) GetReserveNumberByActivity(context.Context, *GetReserveNumberByActivityReq) (*GetReserveNumberByActivityRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetReserveNumberByActivity not implemented")
 }
 func (UnimplementedAppointmentServiceServer) ActivityExposureReport(context.Context, *ActivityExposureReportReq) (*ActivityExposureReportRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ActivityExposureReport not implemented")
@@ -276,6 +292,24 @@ func _AppointmentService_GetPersonReserveDetail_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_GetReserveNumberByActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReserveNumberByActivityReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).GetReserveNumberByActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appointment_service.AppointmentService/GetReserveNumberByActivity",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).GetReserveNumberByActivity(ctx, req.(*GetReserveNumberByActivityReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AppointmentService_ActivityExposureReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ActivityExposureReportReq)
 	if err := dec(in); err != nil {
@@ -324,6 +358,10 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPersonReserveDetail",
 			Handler:    _AppointmentService_GetPersonReserveDetail_Handler,
+		},
+		{
+			MethodName: "GetReserveNumberByActivity",
+			Handler:    _AppointmentService_GetReserveNumberByActivity_Handler,
 		},
 		{
 			MethodName: "ActivityExposureReport",

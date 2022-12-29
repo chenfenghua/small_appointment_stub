@@ -8,12 +8,6 @@ message PublishActivityReq {
   string union_id = 1;// 用户唯一标识
   string open_id =2;// 仅作为存储使用
   AppointmentInfo info = 3;// 预约信息
-//  string activity_name = 3; // 不为空
-//  string description = 4;// 描述（非必填）
-//  string cover = 5; // 封面链接
-//  int32 mode = 6; // 预约模式：0-未知、1-循环模式、2-固定日期模式
-//  map<string, AppointmentTimeSlot> infos = 7;// 所有模式都是这种方式，端侧自己决定字符串的解析方式作为传入
-//  repeated ExtraInfo extra_info = 8;// 额外的预约信息
 }
 
 message AppointmentInfo {
@@ -50,7 +44,6 @@ message TimeSlot {
   string begin_time = 1;
   string end_time = 2;
   int32 max_number = 3; // 最大数量-1为无限
-  int32 left_number = 4;// 剩余数量
 }
 
 message ExtraInfo {
@@ -73,18 +66,14 @@ message GetPersonActivityListRsp {
 
 message ReserveReq {
   string union_id = 1;
-    ReserveDetail detail = 2;
-//  string activity_id = 2; // 唯一id，
-//  repeated RserveInfo info = 3; // 预约信息，可以一次预约多个
-//  ExtraInfo extra_info = 4;// 每次预约单只有一个预约人
-//  int64 timestamp = 5;// 发起预约的时间戳
+  ReserveDetail detail = 2;
 }
 
 message RserveInfo {
   string date = 1;// 年月日具体规则需要对齐
   string begin_time = 2;
   string end_time = 3;
-  string number = 4; //预约人数？
+  int32 number = 4; //预约人数？
 }
 
 message ReserveRsp {
@@ -104,8 +93,8 @@ message GetPersonReserveListReq {
 message ReserveDetail {
   string activity_id = 1; // 唯一id，
   repeated RserveInfo info = 2; // 预约信息，可以一次预约多个
-  ExtraInfo extra_info = 3;// 每次预约单只有一个预约人
-  int64 timestamp = 4;// 发起预约的时间戳
+  repeated ExtraInfo extra_info = 3;// 每次预约单只有一个预约人
+  int64 timestamp = 4;// 发起预约的时间戳(后台返回）仅查询时会需要
   int32 status = 5; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队）
 }
 
@@ -167,6 +156,15 @@ message GetPersonActivityRsp {
     ActivityDetail info = 1;
 }
 
+message GetReserveNumberByActivityReq {
+  string activity_id = 1;
+  string date = 2; // 日期utc时间戳
+}
+
+message GetReserveNumberByActivityRsp {
+  map<string, int32> data = 1; // 以开始_结束时间作为key,value为预约的人数。
+}
+
 // 预约人数是指的预约单的总数？xx人来过指的的记录什么信息？
 service AppointmentService {
   // 发布活动
@@ -175,12 +173,14 @@ service AppointmentService {
   rpc GetPersonActivityList(GetPersonActivityListReq) returns(GetPersonActivityListRsp);
   // 获取活动详情
   rpc GetPersonActivity(GetPersonActivityReq) returns(GetPersonActivityRsp);
-  // 预约（注意幂等）同一个活动 同一个用户
+  // 预约
   rpc Reserve(ReserveReq) returns(ReserveRsp);
   // 获取用户预约列表（应该需要分页）
   rpc GetPersonReserveList(GetPersonReserveListReq) returns(GetPersonReserveListRsp);
   // 获取用户预约详情
   rpc GetPersonReserveDetail(GetPersonReserveDetailReq) returns(GetPersonReserveDetailRsp);
+  // 获取活动的某日预约人数
+  rpc GetReserveNumberByActivity(GetReserveNumberByActivityReq) returns(GetReserveNumberByActivityRsp);
   // 活动曝光上报
   rpc ActivityExposureReport(ActivityExposureReportReq) returns(ActivityExposureReportRsp);
 }
