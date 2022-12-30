@@ -48,8 +48,9 @@ message TimeSlot {
 
 message ExtraInfo {
   string field_name = 1;
-  string field_value = 2;
+  string field_value = 2;// 字段值，预约时使用
   bool is_must = 3; // 是否必填
+  string field_type = 4; // 字段类型
 }
 
 message PublishActivityRsp {
@@ -69,7 +70,7 @@ message ReserveReq {
   ReserveDetail detail = 2;
 }
 
-message RserveInfo {
+message ReserveInfo {
   string date = 1;// 年月日具体规则需要对齐
   string begin_time = 2;
   string end_time = 3;
@@ -92,7 +93,7 @@ message GetPersonReserveListReq {
 
 message ReserveDetail {
   string activity_id = 1; // 唯一id，
-  repeated RserveInfo info = 2; // 预约信息，可以一次预约多个
+  repeated ReserveInfo info = 2; // 预约信息，可以一次预约多个
   repeated ExtraInfo extra_info = 3;// 每次预约单只有一个预约人
   int64 timestamp = 4;// 发起预约的时间戳(后台返回）仅查询时会需要
   int32 status = 5; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队）
