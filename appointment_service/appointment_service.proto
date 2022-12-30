@@ -99,6 +99,14 @@ message ReserveDetail {
   int32 status = 5; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队）
 }
 
+enum ReserveStatus {
+  UNKNOWN = 0; // 未知
+  SUCCESS = 1; // 成功
+  FAILED = 2; // 失败
+  PADDING = 3; // 队列中
+  HANDLING = 4; // 处理中
+}
+
 message GetPersonReserveListRsp {
   repeated ReserveDetail data = 1;
   int32 total = 2;

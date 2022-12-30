@@ -10,10 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3418426c-6305-4ed8-9a66-9769670870be" name="Default Changelist" comment="调整接口">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appointment_service/appointment_service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/appointment_service/appointment_service.proto" afterDir="false" />
-    </list>
+    <list default="true" id="3418426c-6305-4ed8-9a66-9769670870be" name="Default Changelist" comment="调整接口" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
