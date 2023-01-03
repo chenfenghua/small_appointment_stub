@@ -75,6 +75,7 @@ message ReserveInfo {
   string begin_time = 2;
   string end_time = 3;
   int32 number = 4; //预约人数？
+  int32 total = 5; // 本列可预约的原始总量
 }
 
 message ReserveRsp {
