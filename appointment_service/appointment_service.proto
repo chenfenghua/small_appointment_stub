@@ -97,6 +97,7 @@ message ReserveDetail {
   repeated ExtraInfo extra_info = 3;// 每次预约单只有一个预约人
   int64 timestamp = 4;// 发起预约的时间戳(后台返回）仅查询时会需要
   int32 status = 5; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队）
+  int32 project_id = 6;// 预约项目的ID
 }
 
 enum ReserveStatus {
@@ -143,6 +144,7 @@ message GetPersonReserveDetailRsp {
 message ActivityExposureReportReq {
   string activity_id = 1;// 事件序列化
   string union_id = 2; // 来过活动的人
+  int32 project_id = 3;// 来过活动对应的项目ID
 }
 message ActivityExposureReportRsp {
 }
