@@ -170,6 +170,7 @@ message GetPersonActivityRsp {
 message GetReserveNumberByActivityReq {
   string activity_id = 1;
   string date = 2; // 日期utc时间戳
+  int32 project_id = 3;// 项目ID
 }
 
 message GetReserveNumberByActivityRsp {
