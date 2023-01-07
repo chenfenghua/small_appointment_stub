@@ -26,6 +26,7 @@ message AppointmentProject {
   string description = 5;// 描述（非必填）
   int32 status = 6;// 0-未知、1-可预约、2-不可预约（已结束）、3-临时暂停
   string extra_info = 7;// 客户自行使用
+  string project_id = 8;// 客户端生成的uuid，保证活动内唯一即可
 }
 
 // 预约说明
@@ -98,7 +99,7 @@ message ReserveDetail {
   repeated ExtraInfo extra_info = 3;// 每次预约单只有一个预约人
   int64 timestamp = 4;// 发起预约的时间戳(后台返回）仅查询时会需要
   int32 status = 5; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队）
-  int32 project_id = 6;// 预约项目的ID
+  string project_id = 6;// 预约项目的ID
 }
 
 enum ReserveStatus {
@@ -145,7 +146,7 @@ message GetPersonReserveDetailRsp {
 message ActivityExposureReportReq {
   string activity_id = 1;// 事件序列化
   string union_id = 2; // 来过活动的人
-  int32 project_id = 3;// 来过活动对应的项目ID
+  string project_id = 3;// 来过活动对应的项目ID
 }
 message ActivityExposureReportRsp {
 }
@@ -171,7 +172,7 @@ message GetPersonActivityRsp {
 message GetReserveNumberByActivityReq {
   string activity_id = 1;
   string date = 2; // 日期utc时间戳
-  int32 project_id = 3;// 项目ID
+  string project_id = 3;// 项目ID
 }
 
 message GetReserveNumberByActivityRsp {
