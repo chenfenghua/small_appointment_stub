@@ -82,7 +82,7 @@ message ReserveInfo {
 
 message ReserveRsp {
   string id = 1; // 预约ID，唯一，根据此id可以查对应用户的预约单
-  int32 number = 2;// 预约号？
+  int64 reserve_number = 2;// 预约号
   int32 status = 3; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队、4-已取消）
 }
 
@@ -127,24 +127,6 @@ message GetPersonReserveDetailReq {
 message GetPersonReserveDetailRsp {
     ReserveDetail detail = 1;// 详情
 }
-
-//message GetActivityReserveListReq {
-//  string union_id = 1;// 用户
-//  int32 page = 2; // 页数，从1开始，默认为1
-//  int32 size = 3;// 大小，默认为10，不填默认为10
-//}。
-//// 根据时间线存储的用户发布的活动被预约的详情单时间点
-//message GetPersonActivityRserveListReq {
-//  string publish_union_id = 1;// 发布人用户ID
-//  int32 page = 2; // 页数，从1开始，默认为1
-//  int32 size = 3;// 大小，默认为10，不填默认为10
-//}
-//message GetPersonActivityRserveListRsp {
-//  repeated ReserveDetail data = 1;
-//  int32 total = 2;
-//  bool is_finish = 3; //  是否结束
-//}
-
 
 message ActivityExposureReportReq {
   string activity_id = 1;// 事件序列化
