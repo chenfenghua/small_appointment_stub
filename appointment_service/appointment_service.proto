@@ -27,6 +27,7 @@ message AppointmentProject {
   int32 status = 6;// 0-未知、1-可预约、2-不可预约（已结束）、3-临时暂停
   string extra_info = 7;// 客户自行使用
   string project_id = 8;// 客户端生成的uuid，保证活动内唯一即可
+  // todo 是否需要补充项目的当前一共被预约的次数
 }
 
 // 预约说明
@@ -91,6 +92,7 @@ message GetPersonReserveListReq {
   string activity_id = 3;// 默认为空，不进行过滤
   int32 page = 4; // 页数，从1开始，默认为1
   int32 size = 5;// 大小，默认为10，不填默认为10
+  string project_id = 6;// 默认为空，不进行过滤，且前置条件为activity_id不为空
 }
 
 message ReserveDetail {
@@ -100,6 +102,7 @@ message ReserveDetail {
   int64 timestamp = 4;// 发起预约的时间戳(后台返回）仅查询时会需要
   int32 status = 5; // 预约状态（0-未知、1-预约成功、2-预约失败、3-预约进入排队）
   string project_id = 6;// 预约项目的ID
+  int64 reserve_number = 7;// 预约单号
 }
 
 enum ReserveStatus {
@@ -158,8 +161,8 @@ message GetPersonActivityReq {
 
 message ActivityDetail {
   AppointmentInfo infos = 1;
-  int32 reserve_number = 2;// 预约人数（预约单的数量，不管取消）
-  int32 watch_number = 3;// 来过人数（这个正常需要上报接口）
+  int32 reserve_time = 2;// 预约次数（活动被预约的次数）
+  int32 watch_member_count = 3;// 来过人数（这个正常需要上报接口）
   string timestamp = 4;//
   int32 user_type = 5;// 当前查询的用户类型，0-未知、1-预约者、2-发布者
   string activity_id = 6;// 当前活动ID
